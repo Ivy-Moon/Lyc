@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+	div{
+		width: 200px;
+		height: 300px;
+
+	}
+	</style>
+</head>
+<body>
+<div id="dv"></div>
+<script>
+	(function(window){
+		var ret=[],
+		push=ret.push;
+		function jquery(selector){
+			return new jquery.fn.init(selector);
+		};
+		jquery.fn=jquery.prototype={
+			constructor:jquery,
+			init:function(selector){
+				return push.call(this,document.querySelector(selector));
+			},
+			each:function(callback){
+				var i=0,
+				l=this.length;
+				for(;i<l;){
+					if(callback.call(this[i],this[i],i++)===false) break;
+				};
+				return this;
+			}
+		};
+
+		jquery.fn.extend=jquery.extend=function(target,source){
+
+			if(source && typeof source === 'object'){
+				var k;
+				for( k in source){
+					target[k]=source[k];
+				};
+			};
+		};
+
+		jquery.extend({
+			getCss:function(dom,name){
+				return document.defaultView && document.defaultView.getComputedStyle?document.defaultView.getComputedStyle(dom)[name]:document.currentStyle[name];
+			},
+			setCss:function(){
+				
+			}
+		})
+
+		jquery.fn.init.prototype=jquery.fn;
+		$=window.jquery=jquery;
+
+	}(window));
+
+	console.log($('#dv'))
+</script>
+</body>
+</html>
